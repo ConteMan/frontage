@@ -1,0 +1,6 @@
+interface:
+  display_name: "frontage"
+  short_description: "Build upload-ready static business websites"
+  default_prompt: "Use $frontage to create a pure static enterprise landing page and package it for Cloudflare Pages upload."
+policy:
+  allow_implicit_invocation: true
