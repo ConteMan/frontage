@@ -1,0 +1,16 @@
+{
+  "name": "frontage",
+  "description": "Static business website skill for AI coding agents.",
+  "owner": {
+    "name": "ConteMan"
+  },
+  "plugins": [
+    {
+      "name": "frontage",
+      "description": "Guide non-technical operators to create, refine, preview, and package pure static multi-page business websites. Output is a Cloudflare-Pages-ready zip.",
+      "category": "websites",
+      "source": "./",
+      "homepage": "https://github.com/ConteMan/frontage"
+    }
+  ]
+}

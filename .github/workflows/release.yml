@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify VERSION matches tag
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          ver="$(tr -d '[:space:]' < VERSION)"
+          if [ "$tag" != "$ver" ]; then
+            echo "Tag ${GITHUB_REF_NAME} does not match VERSION '${ver}'"
+            exit 1
+          fi
+
+      - name: Build frontage.zip
+        run: |
+          mkdir -p dist
+          zip -r dist/frontage.zip . \
+            -x ".git/*" \
+            -x ".github/*" \
+            -x "dist/*" \
+            -x "*.DS_Store" \
+            -x "__MACOSX/*"
+
+      - name: Create release with frontage.zip
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/frontage.zip
+          generate_release_notes: true

@@ -7,6 +7,10 @@ description: 'Guide non-technical operators to create, refine, preview, and pack
 
 > **v0.1.0 scope: enterprise / corporate sites.** The architecture is built to extend to SaaS landing pages, APP marketing sites, and game/developer sites in later releases. When in doubt, default to the corporate template under `assets/templates/corporate/`.
 
+## Update check (non-blocking)
+
+At the start of every task, run `bash scripts/check-update.sh` from the skill directory. It performs a read-only version check at most once per day and prints one line when a newer frontage is available; relay that line to the user, then continue. It sends no data, fails silently when offline or sandboxed, and must never block the work.
+
 ## Core Workflow
 
 Create a pure static multi-page business website that an operator can preview locally, revise with natural language, confirm, package as a zip, and upload to static hosting such as Cloudflare Pages.
