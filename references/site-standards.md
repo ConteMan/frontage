@@ -78,6 +78,7 @@ Before handoff:
 - Page has viewport meta.
 - Page has non-empty `<title>` and non-empty `<meta name="description">`.
 - Open Graph and Twitter Card meta tags are present on every page (`og:type`, `og:title`, `og:description`, `og:image`, `twitter:card`).
+- DESIGN.md tokens (if a DESIGN.md was provided or a preset was selected) are realized as CSS variables in `:root` and consumed by every section consistently.
 - Navigation anchors work or gracefully point to existing sections.
 - Local image, CSS, and JS references resolve.
 - Desktop layout has no obvious overlap.

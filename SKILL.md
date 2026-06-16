@@ -20,7 +20,7 @@ Follow this order:
 1. Choose the intake mode from the user's prompt: guided, quick, or free-form.
 2. For guided mode, read `references/operator-guided-flow.md` and ask option-based questions in small batches.
 3. Read `references/page-matrix.md` to choose required and optional pages based on site type.
-4. Read `references/design-md-guide.md` when the user provides or asks for design.md-driven style.
+4. Read `references/design-md-guide.md` for any style decision (preset, pasted DESIGN.md, or operator-supplied URL). If the operator wants help finding a non-preset style, mentions a discovery catalog (refero / getdesign.md), pastes a catalog URL, or points at a brand site for inspiration, also read `references/design-md-discovery.md`.
 5. Read `references/brand-assets-guide.md` before generating logo, favicon, or icon assets.
 6. Read `references/image-policy.md` before generating image placeholders or replacing images.
 7. Read `references/legal-page-templates.md` before creating privacy policy, terms, or other legal-style pages.
@@ -165,7 +165,8 @@ Keep the first screen clear and concrete. The user should understand who the com
 - `references/site-standards.md`: business site homepage structure, copy rules, visual QA, anti-patterns.
 - `references/operator-guided-flow.md`: option-based intake flow for non-technical operators.
 - `references/page-matrix.md`: required and optional pages by site type.
-- `references/design-md-guide.md`: how to use design.md files or design references for varied visual styles.
+- `references/design-md-guide.md`: DESIGN.md schema, built-in preset definitions, and the agent's application rules.
+- `references/design-md-discovery.md`: where to source a DESIGN.md (refero / getdesign.md catalogs, reference brand sites) and the license boundaries around third-party content.
 - `references/brand-assets-guide.md`: logo, favicon, icon, and brand asset generation rules.
 - `references/image-policy.md`: image roles, SVG placeholder rules, and replacement workflow.
 - `references/legal-page-templates.md`: contact, privacy, terms, and legal-style page handling.
