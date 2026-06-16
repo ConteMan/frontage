@@ -9,7 +9,7 @@ description: 'Guide non-technical operators to create, refine, preview, and pack
 
 ## Core Workflow
 
-Create a pure static multi-page business website that an operator can preview locally, revise with natural language, confirm, package as a zip using built-in OS features, and upload to static hosting such as Cloudflare Pages.
+Create a pure static multi-page business website that an operator can preview locally, revise with natural language, confirm, package as a zip, and upload to static hosting such as Cloudflare Pages.
 
 Follow this order:
 
@@ -18,16 +18,18 @@ Follow this order:
 3. Read `references/page-matrix.md` to choose required and optional pages based on site type.
 4. Read `references/design-md-guide.md` when the user provides or asks for design.md-driven style.
 5. Read `references/brand-assets-guide.md` before generating logo, favicon, or icon assets.
-6. Read `references/legal-page-templates.md` before creating privacy policy, terms, or other legal-style pages.
-7. Read `references/site-standards.md` before designing page structure or visual direction.
-8. Use `assets/templates/corporate/` as the starting structure for an enterprise/corporate site unless the user provides an existing site.
-9. Produce a self-contained static site directory with `index.html`, selected subpages, and local assets under `assets/`.
-10. Preview by opening `index.html` directly in a browser or with the agent's in-app browser tooling. Do not require a local web server for normal operator preview.
-11. Iterate with the operator until they explicitly choose packaging or final export.
-12. Before packaging, present a final checklist: missing content, placeholders, legal pages, contact data, brand assets, links, and pages selected/excluded.
-13. Package only after the operator confirms the checklist.
-14. Use bundled scripts as optional QA helpers when Node.js is already available in the agent environment.
-15. Provide the site directory, zip guidance, and a short deployment note.
+6. Read `references/image-policy.md` before generating image placeholders or replacing images.
+7. Read `references/legal-page-templates.md` before creating privacy policy, terms, or other legal-style pages.
+8. Read `references/site-standards.md` before designing page structure or visual direction.
+9. Ask the operator which deploy target they prefer. Default to **Cloudflare Pages Direct Upload** for v0.1.0. Match the choice to a guide under `references/deploy/`; if no matching guide exists, follow `references/deploy/_template.md` to outline a generic zip-upload flow and note that a target-specific guide can be added later.
+10. Use `assets/templates/corporate/` as the starting structure for an enterprise/corporate site unless the user provides an existing site.
+11. Produce a self-contained static site directory with `index.html`, selected subpages, and local assets under `assets/`.
+12. Preview by opening `index.html` directly in a browser or with the agent's in-app browser tooling. Do not require a local web server for normal operator preview.
+13. Iterate with the operator until they explicitly choose packaging or final export.
+14. Before packaging, run **Required Pre-Package QA** (see below). Fix any errors and re-run.
+15. Present the final pre-package checklist.
+16. Package only after the operator confirms the checklist.
+17. Hand the operator the site directory, the zip path, and the chosen deploy guide.
 
 ## Intake Modes
 
@@ -46,6 +48,14 @@ In guided mode:
 - Before generation, summarize selected choices and ask for a simple confirmation.
 - If the operator skips details, generate a first version with clearly marked placeholders.
 
+## In-place Revision Policy
+
+After the first version is generated, keep all subsequent revisions inside the **same site directory**. Do not create new dated or numbered folders per revision round. Tell the operator the directory path once at first generation, then keep using it across every revision.
+
+Exception: if the operator explicitly asks to fork a new version (e.g., "save a copy as v2"), create a sibling directory and confirm the new path with them.
+
+Keeping a single stable path lets the operator find the same preview file in their file manager across rounds, and lets validation and packaging always target the right tree.
+
 ## Revision and Packaging Gate
 
 Do not create a zip immediately after the first version unless the operator explicitly asks for final packaging. Normal workflow is draft -> preview -> revise -> confirm -> package.
@@ -55,22 +65,44 @@ After each preview round, offer focused revision options:
 1. 文案调整
 2. 风格调整
 3. 页面/板块增删
-4. Logo/Icon 调整
-5. 用户协议/隐私政策/联系信息替换
+4. Logo / Icon / 图片调整
+5. 用户协议 / 隐私政策 / 联系信息替换
 6. 准备最终打包
 
-When the operator chooses final packaging, show this checklist first:
+When the operator chooses final packaging, run Required Pre-Package QA first, then show this checklist:
 
 - Required pages present or intentionally excluded
 - Contact page content complete
 - Privacy policy status: user-provided, generated draft, or pending replacement
-- Terms/user agreement status: user-provided, generated draft, or pending replacement
-- Logo and icon status
-- Placeholder text or images still present
+- Terms / user agreement status: user-provided, generated draft, or pending replacement
+- Logo, favicon, and social-preview status
+- Placeholder text or images still present (count by page; hero/above-the-fold called out)
 - Links and navigation checked
+- Open Graph and Twitter Card meta tags present on every page
 - Zip root will contain `index.html`
+- Deploy target confirmed
 
 Package only after the operator confirms the checklist.
+
+## Required Pre-Package QA
+
+Before showing the final checklist, the agent must run in its own environment:
+
+```bash
+node <skill-dir>/scripts/package-static-site.mjs <site-dir> <output.zip>
+```
+
+The packaging script invokes `scripts/validate-static-site.mjs` first. On any validation error it aborts and prints the failing items. Fix the errors in the site directory, then re-run the same command.
+
+The script is pure Node.js and does not require `zip`, `python3`, or any other external tool beyond a Node runtime in the agent's environment.
+
+If the agent environment lacks Node.js, the agent must:
+
+1. Tell the operator that automated QA is unavailable in this session.
+2. Manually verify each item in the `references/site-standards.md` QA Checklist.
+3. Use OS-native zip (see *Preview and Packaging Policy*) to produce the final zip.
+
+Operators are never asked to install Node.js. The QA step is the agent's responsibility, not the operator's.
 
 ## Output Contract
 
@@ -79,36 +111,33 @@ The final site must:
 - Use plain static files only: HTML, CSS, browser JavaScript, images, fonts, and icons.
 - Put the homepage at `index.html` in the site root.
 - Include required pages from the selected site type, usually including `contact.html`, `privacy.html`, and `terms.html`.
-- Include basic local brand assets such as `assets/logo.svg` and `assets/favicon.svg` unless the user provides their own assets or opts out.
+- Include basic local brand assets such as `assets/logo.svg`, `assets/favicon.svg`, and `assets/social-preview.svg` unless the user provides their own assets or opts out.
+- Include Open Graph and Twitter Card meta tags on every page (`og:type`, `og:title`, `og:description`, `og:image`, `twitter:card`).
 - Use relative local paths for site assets.
-- Include `<meta name="viewport" content="width=device-width, initial-scale=1">`.
+- Include `<meta name="viewport" content="width=device-width, initial-scale=1">` on every page.
+- Have a non-empty `<title>` and non-empty `<meta name="description">` on every page.
 - Work without a build step.
 - Work when `index.html` is opened directly from the file system.
 - Avoid remote script dependencies unless the user explicitly approves them.
 - Avoid JavaScript modules, `fetch()` for local content, client-side routing requirements, or other browser behaviors that need an HTTP server.
 - Avoid Git, CI, framework setup, CMS setup, and backend services by default.
-- Do not require the operator to install build toolchains or local web servers. Browser preview plus OS built-in zip is the operator's default path.
+- Do not require the operator to install build toolchains or local web servers. Browser preview plus the packaging script (or OS-native zip as fallback) is the operator's default path.
 
 ## Preview and Packaging Policy
 
-Default operator path:
+Operator-facing preview path:
 
 1. Open `index.html` directly in Chrome, Edge, Safari, or the agent's in-app browser.
 2. Revise the page based on visual feedback.
-3. Select the contents of the generated site directory, such as `index.html` and `assets/`, then create a zip with the operating system's built-in compression feature.
-4. Upload the zip to static hosting.
+3. Once the operator confirms the final checklist, hand them the zip produced by the packaging script (see Required Pre-Package QA).
+4. Operator uploads the zip to the chosen deploy target (see `references/deploy/`).
 
-Important packaging rule: compress the contents of the site directory, not the parent folder itself. The zip root should contain `index.html`.
+If for any reason the packaging script cannot run, fall back to OS-native zip:
 
-Windows-friendly packaging:
+- **Windows**: open the site directory in File Explorer, select all contents, right-click → "Compress to ZIP file".
+- **macOS**: open the site directory in Finder, select all contents, right-click → "Compress".
 
-- Prefer File Explorer: open the site directory, select all contents, right-click, choose "Compress to ZIP file" or "Send to > Compressed (zipped) folder".
-- If using PowerShell, use `Compress-Archive` only as an optional convenience.
-
-macOS-friendly packaging:
-
-- Prefer Finder: open the site directory, select all contents, right-click, choose "Compress".
-- Terminal commands are optional and should not be required for operators.
+Important packaging rule: compress the contents of the site directory, not the parent folder itself. The zip root must contain `index.html`.
 
 ## Enterprise Landing Page Shape
 
@@ -129,15 +158,18 @@ Keep the first screen clear and concrete. The user should understand who the com
 
 ## Resource Guide
 
-- `references/site-standards.md`: business site homepage structure, copy rules, visual QA, and anti-patterns.
+- `references/site-standards.md`: business site homepage structure, copy rules, visual QA, anti-patterns.
 - `references/operator-guided-flow.md`: option-based intake flow for non-technical operators.
 - `references/page-matrix.md`: required and optional pages by site type.
 - `references/design-md-guide.md`: how to use design.md files or design references for varied visual styles.
 - `references/brand-assets-guide.md`: logo, favicon, icon, and brand asset generation rules.
+- `references/image-policy.md`: image roles, SVG placeholder rules, and replacement workflow.
 - `references/legal-page-templates.md`: contact, privacy, terms, and legal-style page handling.
+- `references/deploy/cloudflare-pages.md`: Cloudflare Pages Direct Upload deploy guide.
+- `references/deploy/_template.md`: template for adding new deploy target guides.
 - `assets/templates/corporate/`: starter static site files for enterprise/corporate sites — copy before customization.
-- `scripts/validate-static-site.mjs`: optional QA helper for Codex or maintainers when Node.js is available.
-- `scripts/package-static-site.mjs`: optional packaging helper for Codex or maintainers when Node.js is available.
+- `scripts/validate-static-site.mjs`: site validator. Invoked automatically by the packaging script.
+- `scripts/package-static-site.mjs`: pure-Node packaging step. Validates first, then produces the zip. **Required** before showing the final checklist.
 
 ## Operator Prompt Template
 
@@ -159,14 +191,3 @@ When the user needs a starting prompt, offer this template:
 部署目标：Cloudflare Pages Direct Upload
 要求：纯静态 HTML，生成后先预览和多轮调整；我确认最终清单后再打包 zip。
 ```
-
-## Optional Technical Validation
-
-If Node.js is already available in the agent environment, these helpers may be used:
-
-```bash
-node <skill-dir>/scripts/validate-static-site.mjs <site-dir>
-node <skill-dir>/scripts/package-static-site.mjs <site-dir> <output.zip>
-```
-
-If Node.js is unavailable, fall back to direct browser preview plus OS built-in zip.

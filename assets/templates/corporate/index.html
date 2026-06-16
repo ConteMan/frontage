@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>品牌名 - 企业官网</title>
     <meta name="description" content="用一句话说明企业定位、服务对象和核心价值。">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="品牌名 - 企业官网">
+    <meta property="og:description" content="用一句话说明企业定位、服务对象和核心价值。">
+    <meta property="og:image" content="assets/social-preview.svg">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <style>
       :root {
@@ -18,9 +23,7 @@
         --radius: 8px;
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       body {
         margin: 0;
@@ -30,10 +33,7 @@
         line-height: 1.6;
       }
 
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
+      a { color: inherit; text-decoration: none; }
 
       .container {
         width: min(1120px, calc(100% - 40px));
@@ -89,9 +89,7 @@
         border-color: #bdd3f8;
       }
 
-      .hero {
-        padding: 86px 0 54px;
-      }
+      .hero { padding: 86px 0 54px; }
 
       .hero-grid {
         display: grid;
@@ -110,7 +108,6 @@
         margin: 0 0 18px;
         font-size: clamp(36px, 6vw, 60px);
         line-height: 1.08;
-        letter-spacing: 0;
       }
 
       .lead {
@@ -131,58 +128,31 @@
         background: var(--panel);
         padding: 22px;
         box-shadow: 0 18px 50px rgba(23, 32, 51, 0.08);
-      }
-
-      .dashboard {
-        display: grid;
-        gap: 14px;
-      }
-
-      .metric-row {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-      }
-
-      .metric,
-      .chart,
-      .mini-card {
-        border: 1px solid var(--line);
-        border-radius: 6px;
-        background: #fff;
-        padding: 16px;
-      }
-
-      .metric strong {
-        display: block;
-        font-size: 24px;
-      }
-
-      .metric span,
-      .mini-card span {
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .chart-bars {
+        min-height: 320px;
         display: flex;
-        align-items: end;
-        gap: 10px;
-        height: 130px;
-        margin-top: 18px;
+        align-items: center;
+        justify-content: center;
       }
 
-      .chart-bars i {
-        flex: 1;
+      .hero-panel {
+        text-align: center;
+        max-width: 360px;
+      }
+
+      .hero-panel strong {
         display: block;
-        min-height: 28px;
-        border-radius: 5px 5px 0 0;
-        background: #9fc4ff;
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: var(--text);
       }
 
-      section {
-        padding: 58px 0;
+      .hero-panel p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
       }
+
+      section { padding: 58px 0; }
 
       .section-head {
         max-width: 720px;
@@ -274,25 +244,10 @@
           flex-direction: column;
           padding: 16px 0;
         }
-
-        .nav-links {
-          flex-wrap: wrap;
-        }
-
-        .hero-grid,
-        .grid-3,
-        .strip-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .hero {
-          padding-top: 52px;
-        }
-
-        .cta {
-          align-items: flex-start;
-          flex-direction: column;
-        }
+        .nav-links { flex-wrap: wrap; }
+        .hero-grid, .grid-3, .strip-grid { grid-template-columns: 1fr; }
+        .hero { padding-top: 52px; }
+        .cta { align-items: flex-start; flex-direction: column; }
       }
     </style>
   </head>
@@ -303,7 +258,6 @@
         <nav class="nav-links" aria-label="主导航">
           <a href="about.html">关于</a>
           <a href="services.html">服务</a>
-          <a href="#use-cases">场景</a>
           <a href="contact.html">联系</a>
           <a class="button" href="mailto:hello@example.com">预约沟通</a>
         </nav>
@@ -322,24 +276,21 @@
               <a class="button secondary" href="#services">了解服务</a>
             </div>
           </div>
-          <div class="hero-visual" aria-label="业务能力示意">
-            <div class="dashboard">
-              <div class="metric-row">
-                <div class="metric"><strong>98%</strong><span>客户满意度</span></div>
-                <div class="metric"><strong>30天</strong><span>典型交付周期</span></div>
-                <div class="metric"><strong>24h</strong><span>响应机制</span></div>
-              </div>
-              <div class="chart">
-                <strong>业务增长示意</strong>
-                <div class="chart-bars">
-                  <i style="height: 36%"></i>
-                  <i style="height: 52%"></i>
-                  <i style="height: 64%"></i>
-                  <i style="height: 78%"></i>
-                  <i style="height: 92%"></i>
-                </div>
-              </div>
-              <div class="mini-card"><strong>替换为真实产品截图或服务流程图</strong><br><span>上线前请替换占位内容。</span></div>
+          <!--
+            AI: replace this neutral hero placeholder with imagery that matches the chosen visual style
+            and the operator's business. See references/design-md-guide.md for the five style presets
+            and references/image-policy.md for the replacement workflow. Style-to-visual hints:
+              - 稳重可信: certification badges, team photo, or factual proof points
+              - 科技现代: product UI screenshot, data visualization, or schematic diagram
+              - 高端专业: refined typography card, signature work, or executive portrait
+              - 清爽简洁: single hero illustration or minimal product shot
+              - 活力增长: bold product hero shot, motion-style banner, or vivid graphic
+            Do NOT ship the neutral placeholder in the final packaged site without operator confirmation.
+          -->
+          <div class="hero-visual" aria-label="行业相关视觉占位">
+            <div class="hero-panel">
+              <strong>替换为契合行业与风格的视觉</strong>
+              <p>可选方向：产品截图、案例图、团队照、行业图表、原创插画。打包前必须替换。</p>
             </div>
           </div>
         </div>

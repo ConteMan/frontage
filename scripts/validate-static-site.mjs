@@ -67,6 +67,23 @@ if (!htmlFiles.length && exists(root) && fs.statSync(root).isDirectory()) {
   errors.push("No HTML files found.");
 }
 
+// Pre-pass: collect each page's header nav internal-html links for cross-page consistency.
+const navLinksByPage = new Map();
+for (const htmlPath of htmlFiles) {
+  const html = fs.readFileSync(htmlPath, "utf8");
+  const headerMatch = html.match(/<header[^>]*>([\s\S]*?)<\/header>/i);
+  const navLinks = new Set();
+  if (headerMatch) {
+    const headerHtml = headerMatch[1];
+    const linkPattern = /\bhref=["']([^"']+\.html)(?:[?#][^"']*)?["']/gi;
+    let m;
+    while ((m = linkPattern.exec(headerHtml)) !== null) {
+      navLinks.add(m[1].toLowerCase());
+    }
+  }
+  navLinksByPage.set(htmlPath, navLinks);
+}
+
 for (const htmlPath of htmlFiles) {
   const relativeHtml = path.relative(root, htmlPath);
   const html = fs.readFileSync(htmlPath, "utf8");
@@ -76,16 +93,22 @@ for (const htmlPath of htmlFiles) {
     errors.push(`Missing viewport meta tag: ${relativeHtml}`);
   }
 
-  if (/file:\/\/|\/Users\/|C:\\\\|localhost:\d+/i.test(html)) {
+  if (/file:\/\/|\/Users\/|C:\\|localhost:\d+/i.test(html)) {
     errors.push(`HTML contains local machine paths or localhost URLs: ${relativeHtml}`);
   }
 
   if (!/<title>[^<]+<\/title>/i.test(html)) {
-    warnings.push(`Missing non-empty <title>: ${relativeHtml}`);
+    errors.push(`Missing non-empty <title>: ${relativeHtml}`);
   }
 
-  if (!/<meta\s+name=["']description["']/i.test(html)) {
-    warnings.push(`Missing meta description: ${relativeHtml}`);
+  const metaDescTag = html.match(/<meta\s+[^>]*name=["']description["'][^>]*>/i);
+  if (!metaDescTag) {
+    errors.push(`Missing meta description: ${relativeHtml}`);
+  } else {
+    const contentMatch = metaDescTag[0].match(/content=["']([^"']*)["']/i);
+    if (!contentMatch || !contentMatch[1].trim()) {
+      errors.push(`Empty meta description: ${relativeHtml}`);
+    }
   }
 
   const refs = [];
@@ -106,6 +129,25 @@ for (const htmlPath of htmlFiles) {
     }
     if (!exists(target)) {
       errors.push(`Missing local asset in ${relativeHtml}: ${ref}`);
+    }
+  }
+}
+
+// Cross-page header nav consistency (warning only — legal pages may legitimately ship a reduced nav).
+if (navLinksByPage.size > 1) {
+  const pagesWithNav = [...navLinksByPage.entries()].filter(([, set]) => set.size > 0);
+  if (pagesWithNav.length > 1) {
+    const unionLinks = new Set();
+    for (const [, set] of pagesWithNav) {
+      for (const link of set) unionLinks.add(link);
+    }
+    for (const [htmlPath, set] of pagesWithNav) {
+      const relativeHtml = path.relative(root, htmlPath);
+      const selfBase = path.basename(htmlPath).toLowerCase();
+      const missing = [...unionLinks].filter(link => !set.has(link) && link !== selfBase);
+      if (missing.length) {
+        warnings.push(`Header nav on ${relativeHtml} is missing links present on other pages: ${missing.join(", ")}`);
+      }
     }
   }
 }
