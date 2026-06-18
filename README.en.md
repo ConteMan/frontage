@@ -1,13 +1,13 @@
 <div align="center">
   <h1>frontage</h1>
   <p><b>Static business website skill for AI coding agents.</b></p>
-  <sub>Guide non-technical operators from "I need a website" to a Cloudflare-Pages-ready zip — in one conversation.</sub>
+  <sub>Guide non-technical operators from "I need a website" to a previewable, handoff-ready static site — with zip packaging only when needed.</sub>
   <p>🌐 <b>English</b> · <a href="README.md">中文</a></p>
 </div>
 
 ---
 
-`frontage` is a Skill for AI coding agents (Codex, Claude Code, and others) that guides a non-technical operator through generating, previewing, refining, and packaging a multi-page static business website. The agent does the work; the operator answers numbered questions, double-clicks `index.html` to preview, and uploads the final zip to Cloudflare Pages.
+`frontage` is a Skill for AI coding agents (Codex, Claude Code, and others) that guides a non-technical operator through generating, previewing, refining, and validating a multi-page static business website. The agent does the work; the operator answers numbered questions, double-clicks `index.html` to preview, and chooses a site-directory handoff, GitHub management, FTP upload, or optional zip packaging.
 
 > **v0.1.0 scope: enterprise / corporate sites.** SaaS landing, APP, and game/developer templates are planned for later releases.
 
@@ -23,8 +23,8 @@
 3. Answer the agent's numbered questions.
 4. Double-click `index.html` to preview the generated site.
 5. Tell the agent in natural language what to change.
-6. When happy, confirm — the agent produces a zip ready to upload.
-7. Upload the zip via Cloudflare Pages Direct Upload (or your chosen target).
+6. When happy, choose the handoff method: site directory, GitHub management, FTP upload, or zip when needed.
+7. Publish through the selected target, such as Cloudflare Pages Direct Upload, GitHub Pages, FTP/SFTP, or a hosting panel.
 
 The operator never needs Git, Node, a local server, or build tools.
 
@@ -121,17 +121,19 @@ references/
   image-policy.md                     image roles, SVG placeholder rules
   legal-page-templates.md             privacy, terms, contact handling
   deploy/
-    cloudflare-pages.md               Cloudflare Pages Direct Upload guide
+    cloudflare-pages.md               Cloudflare Pages Direct Upload guide (zip required)
+    github-static.md                  GitHub-managed static site guide (no zip by default)
+    ftp-upload.md                     FTP/SFTP or hosting-panel upload guide (no zip by default)
     _template.md                      template for new deploy targets
 assets/templates/
   corporate/                          enterprise site starter template (v0.1.0)
 scripts/
   validate-static-site.mjs            HTML / asset / nav validation
-  package-static-site.mjs             pure-Node validate + zip
+  package-static-site.mjs             pure-Node validate + optional zip
   check-update.mjs                    cross-platform non-blocking daily update check
   check-update.sh                     Bash compatibility entry
 .claude-plugin/marketplace.json       Claude plugin marketplace metadata
-VERSION                               0.1.1
+VERSION                               0.1.2
 ```
 
 ## Roadmap

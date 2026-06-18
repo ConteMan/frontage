@@ -81,7 +81,7 @@ Treat any incoming DESIGN.md as a partially-filled instance of this schema. Miss
 3. Build reusable utility classes (`.button`, `.button-secondary`, `.card`, `.section-head`) keyed off those variables — never inline values that the schema covers.
 4. Apply the layout density, container width, and breakpoints uniformly to every page in the site.
 5. Pick or generate brand assets (logo, favicon, social preview) to match the Imagery direction.
-6. Record the schema fill state in the pre-package checklist so the operator can see which tokens came from the DESIGN.md vs. defaults.
+6. Record the schema fill state in the final handoff checklist so the operator can see which tokens came from the DESIGN.md vs. defaults.
 
 ## Built-in Style Presets
 

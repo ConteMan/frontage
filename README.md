@@ -1,13 +1,13 @@
 <div align="center">
   <h1>frontage</h1>
   <p><b>面向 AI 编码助手的静态商业网站 Skill。</b></p>
-  <sub>引导不懂代码的运营人员，从"我要做一个官网"到一个可上传 Cloudflare Pages 的 zip——在一次对话中完成。</sub>
+  <sub>引导不懂代码的运营人员，从"我要做一个官网"到一个可预览、可交付的纯静态网站——zip 按需生成。</sub>
   <p>🌐 <a href="README.en.md">English</a> · <b>中文</b></p>
 </div>
 
 ---
 
-`frontage` 是一个面向 AI 编码助手（Codex、Claude Code 等）的 Skill。它通过编号问题引导不懂代码的运营人员一步步生成、预览、修改、打包多页面静态商业网站。AI 干活，运营只需要回答选项、双击 `index.html` 预览、把最终 zip 上传到 Cloudflare Pages。
+`frontage` 是一个面向 AI 编码助手（Codex、Claude Code 等）的 Skill。它通过编号问题引导不懂代码的运营人员一步步生成、预览、修改、校验多页面静态商业网站。AI 干活，运营只需要回答选项、双击 `index.html` 预览，并按需要选择站点目录、GitHub 管理、FTP 上传或 zip 打包。
 
 > **v0.1.0 范围：企业 / 公司官网。** SaaS 落地页、APP 官网、游戏 / 开发者官网在后续版本中加入。
 
@@ -23,8 +23,8 @@
 3. 按编号选项回答 AI 的提问。
 4. 双击生成目录里的 `index.html` 预览效果。
 5. 用自然语言告诉 AI 要改什么。
-6. 满意后让 AI 打包，得到可上传的 zip。
-7. 通过 Cloudflare Pages Direct Upload 上传（或其他你选的部署目标）。
+6. 满意后选择交付方式：站点目录、GitHub 管理、FTP 上传，或需要时生成 zip。
+7. 按选定的部署目标发布，例如 Cloudflare Pages Direct Upload、GitHub Pages、FTP/SFTP 或主机面板。
 
 整个过程运营**不需要**安装 Git、Node.js、本地服务器或前端构建工具。
 
@@ -121,17 +121,19 @@ references/
   image-policy.md                     图片角色与占位策略
   legal-page-templates.md             隐私 / 用户协议 / 联系页面处理
   deploy/
-    cloudflare-pages.md               Cloudflare Pages Direct Upload 指南
+    cloudflare-pages.md               Cloudflare Pages Direct Upload 指南（需要 zip）
+    github-static.md                  GitHub 管理静态站点指南（不需要 zip）
+    ftp-upload.md                     FTP/SFTP 或主机面板上传指南（默认不需要 zip）
     _template.md                      新增部署目标的模板
 assets/templates/
   corporate/                          企业官网模板（v0.1.0）
 scripts/
   validate-static-site.mjs            HTML / 资源 / 导航校验
-  package-static-site.mjs             纯 Node 校验 + 打包
+  package-static-site.mjs             纯 Node 校验 + 按需打包
   check-update.mjs                    跨平台非阻塞每日更新检查
   check-update.sh                     Bash 兼容入口
 .claude-plugin/marketplace.json       Claude plugin marketplace 元数据
-VERSION                               0.1.1
+VERSION                               0.1.2
 ```
 
 ## 路线图

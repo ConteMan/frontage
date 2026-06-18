@@ -44,14 +44,14 @@ If the operator has not provided real images, generate SVG placeholders for ever
 
 When informing the operator about placeholders:
 
-- List all placeholder files in the final pre-package checklist, grouped by page.
+- List all placeholder files in the final handoff checklist, grouped by page.
 - Highlight placeholders in the hero or above-the-fold sections — those should be replaced before public launch.
 - Highlight placeholders in legal and contact pages separately — they are usually OK to ship for an internal review version, but should be replaced before a public domain is attached.
 - Never claim placeholder imagery is publishable.
 
 ## Final checklist fields
 
-Track these before packaging:
+Track these before final handoff:
 
 - Total placeholder count
 - Per-page placeholder count

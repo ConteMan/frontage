@@ -86,4 +86,5 @@ Before handoff:
 - Main action button and contact method are present.
 - Placeholder proof content is labeled if not real.
 - The site can be previewed by opening `index.html` directly.
-- The site can be packaged as a zip with OS built-in compression without hidden build requirements.
+- The site can be handed off as a plain directory without hidden build requirements.
+- If zip delivery is selected, the site can be packaged with OS built-in compression and the zip root contains `index.html`.

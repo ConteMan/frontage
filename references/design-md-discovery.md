@@ -21,6 +21,18 @@ These catalogs are independent third-party services. frontage does not redistrib
    - Pastes the style page URL into chat and asks frontage to fetch it.
 5. The agent parses the content against the `design-md-guide.md` schema and proceeds with generation.
 
+## When to proactively suggest this
+
+In guided mode, suggest DESIGN.md discovery before the operator picks a built-in preset. Use it as a recommendation, not a requirement.
+
+Recommended operator-facing wording:
+
+```text
+如果你对网站视觉风格有要求，建议先从 styles.refero.design 或 getdesign.md/design-md 挑一个接近你预期的 DESIGN.md。你不用写代码，只要把 DESIGN.md 内容或页面链接发给我，我会按它提炼颜色、字体、版式和组件风格。也可以跳过，我会用内置预设先生成。
+```
+
+Keep this prompt short when the operator asks for quick mode or already gives a complete brief.
+
 ## When the operator pastes DESIGN.md content
 
 Treat the pasted text as the canonical DESIGN.md. Run it through the schema parser, mark missing sections, and continue.

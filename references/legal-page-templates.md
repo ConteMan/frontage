@@ -49,9 +49,9 @@ If content is missing:
 - Label it as a draft requiring review.
 - Use placeholders for company name, contact email, jurisdiction, and effective date.
 
-## Packaging Checklist
+## Final Handoff Checklist
 
-Before packaging, report:
+Before final handoff, report:
 
 - Privacy policy source: user-provided / generated draft / missing
 - Terms source: user-provided / generated draft / missing

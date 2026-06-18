@@ -36,7 +36,7 @@ Logo/Icon 风格：
 
 ## Final Checklist
 
-Before packaging, report:
+Before final handoff, report:
 
 - Logo source: generated / user-provided / pending
 - Favicon source: generated / user-provided / pending

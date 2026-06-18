@@ -99,7 +99,7 @@ Recommended optional:
 
 ## Final Checklist Fields
 
-Track these before packaging:
+Track these before final handoff:
 
 - Required pages created
 - Optional pages selected

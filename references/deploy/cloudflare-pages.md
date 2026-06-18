@@ -5,13 +5,13 @@
 Use this guide when:
 
 - The operator chose Cloudflare Pages Direct Upload as the deploy target.
-- The operator did not specify a deploy target (this is the default for v0.1.0).
+- The operator explicitly needs a dashboard upload flow that accepts a zip.
 
 ## Operator prerequisites
 
 - A Cloudflare account.
 - Logged into the Cloudflare dashboard.
-- The packaged zip from the Skill's packaging step.
+- A zip from the Skill's optional packaging step.
 
 ## Deploy steps (for the operator)
 
@@ -34,7 +34,7 @@ Use this guide when:
 ## Updating a deployed site
 
 1. Regenerate or revise the site in the Skill.
-2. Re-run the packaging step to produce a new zip.
+2. Re-run the optional packaging step to produce a new zip.
 3. In the existing Pages project, open **Deployments** → **Upload** → upload the new zip.
 4. Cloudflare keeps a deployment history. To roll back, promote an older deployment to production from the **Deployments** list.
 
