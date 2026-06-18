@@ -106,7 +106,7 @@ git -C $env:USERPROFILE\.claude\skills\frontage pull
 claude plugin update frontage
 ```
 
-frontage 在每次任务开始时会做一次非阻塞的版本检查（`scripts/check-update.sh`），最多每天一次，如果发现新版本会在聊天中提醒一行。只读取 GitHub 上的公共 VERSION 文件，不发送任何数据；离线或沙箱环境下静默跳过。
+frontage 在每次任务开始时会做一次非阻塞的版本检查（`scripts/check-update.mjs`），最多每天一次，如果发现新版本会在聊天中提醒一行。它支持 Windows PowerShell 和 macOS 环境，只读取 GitHub 上的公共 VERSION 文件，不发送任何数据；离线、沙箱环境或没有 Node.js 时静默跳过。
 
 ## 目录结构
 
@@ -128,9 +128,10 @@ assets/templates/
 scripts/
   validate-static-site.mjs            HTML / 资源 / 导航校验
   package-static-site.mjs             纯 Node 校验 + 打包
-  check-update.sh                     非阻塞每日更新检查
+  check-update.mjs                    跨平台非阻塞每日更新检查
+  check-update.sh                     Bash 兼容入口
 .claude-plugin/marketplace.json       Claude plugin marketplace 元数据
-VERSION                               0.1.0
+VERSION                               0.1.1
 ```
 
 ## 路线图

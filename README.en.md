@@ -106,7 +106,7 @@ git -C $env:USERPROFILE\.claude\skills\frontage pull
 claude plugin update frontage
 ```
 
-frontage also runs a quiet daily version check from inside the skill (`scripts/check-update.sh`) and reports one line in chat when a newer version is available. It only reads a public version file, sends no data, and stays silent when offline or sandboxed.
+frontage also runs a quiet daily version check from inside the skill (`scripts/check-update.mjs`) and reports one line in chat when a newer version is available. It supports Windows PowerShell and macOS agent environments, only reads a public version file, sends no data, and stays silent when offline, sandboxed, or when Node.js is unavailable.
 
 ## Repository layout
 
@@ -128,9 +128,10 @@ assets/templates/
 scripts/
   validate-static-site.mjs            HTML / asset / nav validation
   package-static-site.mjs             pure-Node validate + zip
-  check-update.sh                     non-blocking daily update check
+  check-update.mjs                    cross-platform non-blocking daily update check
+  check-update.sh                     Bash compatibility entry
 .claude-plugin/marketplace.json       Claude plugin marketplace metadata
-VERSION                               0.1.0
+VERSION                               0.1.1
 ```
 
 ## Roadmap

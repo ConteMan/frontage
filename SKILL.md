@@ -9,7 +9,7 @@ description: 'Guide non-technical operators to create, refine, preview, and pack
 
 ## Update check (non-blocking)
 
-At the start of every task, run `bash scripts/check-update.sh` from the skill directory. It performs a read-only version check at most once per day and prints one line when a newer frontage is available; relay that line to the user, then continue. It sends no data, fails silently when offline or sandboxed, and must never block the work.
+At the start of every task, run `node scripts/check-update.mjs` from the skill directory when Node.js is available in the agent environment. It performs a read-only version check at most once per day and prints one line when a newer frontage is available; relay that line to the user, then continue. It supports Windows PowerShell and macOS environments, sends no data, fails silently when offline or sandboxed, and must never block the work.
 
 ## Core Workflow
 
@@ -173,6 +173,7 @@ Keep the first screen clear and concrete. The user should understand who the com
 - `references/deploy/cloudflare-pages.md`: Cloudflare Pages Direct Upload deploy guide.
 - `references/deploy/_template.md`: template for adding new deploy target guides.
 - `assets/templates/corporate/`: starter static site files for enterprise/corporate sites — copy before customization.
+- `scripts/check-update.mjs`: cross-platform non-blocking daily update check.
 - `scripts/validate-static-site.mjs`: site validator. Invoked automatically by the packaging script.
 - `scripts/package-static-site.mjs`: pure-Node packaging step. Validates first, then produces the zip. **Required** before showing the final checklist.
 
